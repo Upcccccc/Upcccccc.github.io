@@ -7,3 +7,9 @@ Compile with:
 ```bash
 pdflatex yuchen-liu-resume.tex
 ```
+
+The checked-in PDF was generated with:
+
+```bash
+python build_resume_pdf.py
+```
