@@ -1,0 +1,90 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.45in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+\definecolor{ink}{HTML}{171717}
+\definecolor{muted}{HTML}{555555}
+\definecolor{rule}{HTML}{B8B8B0}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlist[itemize]{leftmargin=1.1em,itemsep=1.5pt,topsep=2pt,parsep=0pt,partopsep=0pt}
+\titleformat{\section}{\large\bfseries\color{ink}}{}{0pt}{}[\vspace{1pt}\color{rule}\titlerule]
+\titlespacing*{\section}{0pt}{7pt}{4pt}
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\role}[4]{
+  \textbf{#1} \hfill #2\\
+  \textit{#3} \hfill \textit{#4}
+}
+
+\begin{document}
+
+{\LARGE \textbf{Yuchen Liu}}\\[-1pt]
+Seattle, WA \quad
+\href{mailto:yql6113@gmail.com}{yql6113@gmail.com} \quad
+814-876-2346 \quad
+\href{https://github.com/Upcccccc}{github.com/Upcccccc} \quad
+\href{https://www.linkedin.com/in/liuyuche/}{linkedin.com/in/liuyuche}
+
+\vspace{3pt}
+\textcolor{muted}{AI systems engineer building RL training infrastructure, data/search pipelines, and research-grade open-source tools.}
+
+\section*{Education}
+\textbf{University of Pennsylvania}, M.S. Computer Science, GPA 3.80/4.00 \hfill May 2025\\
+\textbf{Pennsylvania State University}, B.S. Applied Economics, GPA 3.86/4.00 \hfill May 2023
+
+\section*{Experience}
+\role{Software Engineer, Search Infrastructure}{Aug 2025 -- Present}{DoorDash}{Seattle, WA}
+\begin{itemize}
+  \item Built \textbf{Notus}, a next-generation search ingestion platform with Iceberg, Kafka, and Spark, decoupling document ingestion from serving and enabling configuration-driven indexing into multiple backends.
+  \item Built \textbf{Vela}, Argo's hybrid retrieval platform, exposing Lucene-native hybrid search and federated vector retrieval with backends such as Milvus behind one API.
+  \item Migrated 30+ production stacks to modular Jsonnet, eliminating roughly 56K lines of duplicate configuration and reducing config verification time by 90\%.
+  \item Resolved indexer OOM and disk-capacity incidents with 500GB EBS storage, pre-deployment validators, and Kyverno guardrails; led RCA work for revenue-impacting reliability failures.
+\end{itemize}
+
+\role{Software Engineering Intern}{Oct 2024 -- May 2025}{Penn Medicine TissueLab}{Philadelphia, PA}
+\begin{itemize}
+  \item Developed a Python/FastAPI microservice platform to orchestrate PyTorch models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.
+  \item Implemented an event-driven DAG workflow engine for async task execution, processing 10K+ pathology images daily and streaming 12M+ imaging events with sub-10ms latency.
+\end{itemize}
+
+\role{Software Engineering Intern}{Apr 2024 -- Aug 2024}{Information Technology of CAS}{Remote}
+\begin{itemize}
+  \item Designed Kafka and Redis-backed event streaming services that reduced p95 API latency from 2s to 200ms while processing millions of IoT events.
+  \item Contributed to distributed Spring Boot monitoring services, delivered 35+ REST APIs, and maintained 99.7\% uptime in Unix-based production environments.
+\end{itemize}
+
+\section*{Open Source}
+\textbf{nanoRL} \hfill \href{https://github.com/RiddleHe/nanochat}{github.com/RiddleHe/nanochat}
+\begin{itemize}
+  \item Led an open-source RL training framework inside nanochat for clean objective definitions, RL algorithm research, reproducible ablations, and production-grade vLLM inference serving.
+\end{itemize}
+\textbf{nanochat} \hfill \href{https://github.com/RiddleHe/nanochat}{github.com/RiddleHe/nanochat}
+\begin{itemize}
+  \item Built a hackable pretraining and chat stack supporting architecture definition and FLOP-controlled model ablations.
+\end{itemize}
+\textbf{llm-interp} \hfill \href{https://github.com/RiddleHe/llm-interp}{github.com/RiddleHe/llm-interp}
+\begin{itemize}
+  \item Authored reproducible interpretability scripts for model circuit research, including attention-sink analysis and reproductions of LLM decode indeterminism findings.
+\end{itemize}
+
+\section*{Research}
+\textbf{Do Value Vectors in Deep Layers Need Context from the Residual Stream?} \hfill EMNLP 2026, under review\\
+Co-first author. Proposed context-free value vector tables for deep layers, eliminating the V cache and improving validation loss and average scores across 21 benchmarks. \href{https://arxiv.org/abs/2606.02780}{arXiv:2606.02780}\\
+\textbf{Vision Language Models Cannot Plan, but Can They Formalize?} \hfill ECCV 2026, under review\\
+Studied whether VLMs can formalize visual planning tasks into solver-executable PDDL problem files. \href{https://arxiv.org/abs/2509.21576}{arXiv:2509.21576}\\
+\textbf{A co-evolving agentic AI system for medical imaging analysis} \hfill Nature, under review\\
+Built agentic medical-imaging workflows for tool selection, planning, knowledge updates, and human-in-the-loop co-evolution. \href{https://arxiv.org/abs/2509.20279}{arXiv:2509.20279}
+
+\section*{Skills}
+\textbf{Languages:} Python, Kotlin, Java, C++, JavaScript \quad
+\textbf{ML/Infra:} PyTorch, vLLM, Spark, Kafka, Iceberg, Delta Lake, FastAPI, Redis, Docker, Kubernetes, AWS, Spring Boot
+
+\end{document}
