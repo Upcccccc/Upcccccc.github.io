@@ -74,7 +74,6 @@ class ResumeCanvas:
             self.c.setFillColor(LINK if is_link else MUTED)
             self.c.drawString(x, self.y, text)
             if is_link:
-                self.c.line(x, self.y - 1, x + part_w, self.y - 1)
                 self.c.linkURL(url, (x, self.y - 2, x + part_w, self.y + size + 1), relative=0)
             x += part_w
 
@@ -123,25 +122,20 @@ class ResumeCanvas:
             self.c.drawString(org_x, self.y, org_text)
         self.y -= 10.4
 
-    def project(self, name, link_text, url):
+    def project(self, name, url):
         self.c.setFont("AvenirNext-Bold", 9.0)
-        self.c.setFillColor(INK)
-        self.c.drawString(LEFT, self.y, name)
-        x = LEFT + width(name, "AvenirNext-Bold", 9.0) + 6
-        self.c.setFillColor(MUTED)
-        self.c.drawString(x, self.y, "| ")
-        x += width("| ", "AvenirNext", 9.0)
         self.c.setFillColor(LINK)
-        self.c.drawString(x, self.y, link_text)
-        link_w = width(link_text, "AvenirNext", 9.0)
-        self.c.line(x, self.y - 1, x + link_w, self.y - 1)
-        self.c.linkURL(url, (x, self.y - 2, x + link_w, self.y + 10), relative=0)
+        self.c.drawString(LEFT, self.y, name)
+        link_w = width(name, "AvenirNext-Bold", 9.0)
+        self.c.linkURL(url, (LEFT, self.y - 2, LEFT + link_w, self.y + 10), relative=0)
         self.y -= 9.5
 
-    def paper(self, title, venue, lines):
+    def paper(self, title, venue, url, lines):
         self.c.setFont("AvenirNext-Bold", 8.75)
-        self.c.setFillColor(INK)
+        self.c.setFillColor(LINK)
         self.c.drawString(LEFT, self.y, title)
+        title_w = width(title, "AvenirNext-Bold", 8.75)
+        self.c.linkURL(url, (LEFT, self.y - 2, LEFT + title_w, self.y + 10), relative=0)
         self.c.setFont("AvenirNext-Medium", 8.45)
         self.c.setFillColor(MUTED)
         self.c.drawRightString(RIGHT, self.y, venue)
@@ -229,25 +223,22 @@ def build():
     projects = [
         (
             "nanoRL",
-            "github.com/RiddleHe/nanochat",
             "https://github.com/RiddleHe/nanochat",
             "Led an open-source RL training framework inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and vLLM inference serving.",
         ),
         (
             "nanochat",
-            "github.com/RiddleHe/nanochat",
             "https://github.com/RiddleHe/nanochat",
             "Built a hackable pretraining and chat stack supporting architecture definition and FLOP-controlled model ablations.",
         ),
         (
             "llm-interp",
-            "github.com/RiddleHe/llm-interp",
             "https://github.com/RiddleHe/llm-interp",
             "Authored reproducible interpretability scripts for model circuit research, including attention-sink analysis and reproductions of LLM decode indeterminism findings.",
         ),
     ]
-    for name, link, url, desc in projects:
-        r.project(name, link, url)
+    for name, url, desc in projects:
+        r.project(name, url)
         r.bullet(desc)
         r.y -= 3.5
 
@@ -255,23 +246,26 @@ def build():
     r.paper(
         "Do Value Vectors in Deep Layers Need Context from the Residual Stream?",
         "EMNLP 2026, under review",
+        "https://arxiv.org/abs/2606.02780",
         [
             "Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, finding that deep layers benefit from context-free value vectors that preserve original token information.",
-            "Proposed Bank of Values, a learned value-vector table for the last third of layers that eliminates the V cache and improves validation loss and average scores across 21 benchmarks on 135M and 780M models. arXiv:2606.02780",
+            "Proposed Bank of Values, a learned value-vector table for the last third of layers that eliminates the V cache and improves validation loss and average scores across 21 benchmarks on 135M and 780M models.",
         ],
     )
     r.paper(
         "Vision Language Models Cannot Plan, but Can They Formalize?",
         "ECCV 2026, under review",
+        "https://arxiv.org/abs/2509.21576",
         [
-            "Studied whether VLMs can formalize visual planning tasks into solver-executable PDDL problem files. arXiv:2509.21576",
+            "Studied whether VLMs can formalize visual planning tasks into solver-executable PDDL problem files.",
         ],
     )
     r.paper(
         "A co-evolving agentic AI system for medical imaging analysis",
         "Nature, under review",
+        "https://arxiv.org/abs/2509.20279",
         [
-            "Built agentic medical-imaging workflows for tool selection, planning, knowledge updates, and human-in-the-loop co-evolution. arXiv:2509.20279",
+            "Built agentic medical-imaging workflows for tool selection, planning, knowledge updates, and human-in-the-loop co-evolution.",
         ],
     )
 
