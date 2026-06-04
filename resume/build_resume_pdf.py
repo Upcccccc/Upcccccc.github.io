@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 from pypdf import PdfReader
 from reportlab.lib import colors
@@ -55,6 +56,43 @@ def wrap(text, max_width, font="AvenirNext", size=8.7):
     return lines
 
 
+def marked_tokens(text, base_font="AvenirNext", bold_font="AvenirNext-Bold"):
+    tokens = []
+    bold = False
+    for part in text.split("**"):
+        font = bold_font if bold else base_font
+        for token in re.findall(r"\s+|\S+", part):
+            tokens.append((token, font))
+        bold = not bold
+    return tokens
+
+
+def wrap_marked(text, max_width, size=8.8):
+    lines = []
+    current = []
+    current_width = 0
+    for raw_token, font in marked_tokens(text):
+        token = raw_token if current else raw_token.lstrip()
+        if not token:
+            continue
+        if token.isspace():
+            current.append((token, font))
+            current_width += width(token, font, size)
+            continue
+        token_width = width(token, font, size)
+        if current and current_width + token_width > max_width:
+            lines.append(current)
+            token = raw_token.lstrip()
+            current = [(token, font)]
+            current_width = width(token, font, size)
+        else:
+            current.append((token, font))
+            current_width += token_width
+    if current:
+        lines.append(current)
+    return lines
+
+
 class ResumeCanvas:
     def __init__(self, path):
         self.c = canvas.Canvas(str(path), pagesize=letter)
@@ -87,7 +125,7 @@ class ResumeCanvas:
         self.c.line(LEFT, self.y - 4.5, RIGHT, self.y - 4.5)
         self.y -= 15.5
 
-    def plain(self, text, size=8.65, leading=9.7, left=LEFT, font="AvenirNext", color=INK):
+    def plain(self, text, size=8.75, leading=9.85, left=LEFT, font="AvenirNext", color=INK):
         self.c.setFont(font, size)
         self.c.setFillColor(color)
         lines = wrap(text, RIGHT - left, font=font, size=size)
@@ -95,53 +133,61 @@ class ResumeCanvas:
             self.c.drawString(left, self.y - i * leading, line)
         self.y -= len(lines) * leading + 1.8
 
-    def bullet(self, text, size=8.65, leading=9.8):
+    def marked_text(self, text, left, size=8.8, leading=10.05, max_width=None):
+        lines = wrap_marked(text, max_width or RIGHT - left, size=size)
+        self.c.setFillColor(INK)
+        for i, line in enumerate(lines):
+            x = left
+            y = self.y - i * leading
+            for token, font in line:
+                self.c.setFont(font, size)
+                self.c.drawString(x, y, token)
+                x += width(token, font, size)
+        self.y -= len(lines) * leading + 1.4
+
+    def bullet(self, text, size=8.8, leading=10.05):
         indent = 15
-        lines = wrap(text, RIGHT - LEFT - indent, size=size)
         self.c.setFillColor(INK)
         self.c.circle(LEFT + 5, self.y + 2.2, 1.1, fill=1, stroke=0)
-        self.c.setFont("AvenirNext", size)
-        for i, line in enumerate(lines):
-            self.c.drawString(LEFT + indent, self.y - i * leading, line)
-        self.y -= len(lines) * leading + 1.3
+        self.marked_text(text, LEFT + indent, size=size, leading=leading, max_width=RIGHT - LEFT - indent)
 
     def role(self, title, org, dates, location):
-        self.c.setFont("AvenirNext-Bold", 9.2)
+        self.c.setFont("AvenirNext-Bold", 9.35)
         self.c.setFillColor(INK)
         self.c.drawString(LEFT, self.y, title)
 
         right = f"{dates} | {location}"
-        self.c.setFont("AvenirNext-Medium", 8.8)
+        self.c.setFont("AvenirNext-Medium", 8.95)
         self.c.setFillColor(MUTED)
         self.c.drawRightString(RIGHT, self.y, right)
 
-        org_x = LEFT + width(title, "AvenirNext-Bold", 9.2) + 7
-        max_org_right = RIGHT - width(right, "AvenirNext-Medium", 8.8) - 12
+        org_x = LEFT + width(title, "AvenirNext-Bold", 9.35) + 7
+        max_org_right = RIGHT - width(right, "AvenirNext-Medium", 8.95) - 12
         org_text = f"| {org}"
-        if org_x + width(org_text, "AvenirNext-Medium", 8.8) < max_org_right:
+        if org_x + width(org_text, "AvenirNext-Medium", 8.95) < max_org_right:
             self.c.drawString(org_x, self.y, org_text)
-        self.y -= 10.4
+        self.y -= 10.8
 
     def project(self, name, url):
-        self.c.setFont("AvenirNext-Bold", 9.0)
+        self.c.setFont("AvenirNext-Bold", 9.15)
         self.c.setFillColor(LINK)
         self.c.drawString(LEFT, self.y, name)
-        link_w = width(name, "AvenirNext-Bold", 9.0)
+        link_w = width(name, "AvenirNext-Bold", 9.15)
         self.c.linkURL(url, (LEFT, self.y - 2, LEFT + link_w, self.y + 10), relative=0)
-        self.y -= 9.5
+        self.y -= 9.7
 
     def paper(self, title, venue, url, lines):
-        self.c.setFont("AvenirNext-Bold", 8.75)
+        self.c.setFont("AvenirNext-Bold", 8.9)
         self.c.setFillColor(LINK)
         self.c.drawString(LEFT, self.y, title)
-        title_w = width(title, "AvenirNext-Bold", 8.75)
+        title_w = width(title, "AvenirNext-Bold", 8.9)
         self.c.linkURL(url, (LEFT, self.y - 2, LEFT + title_w, self.y + 10), relative=0)
         self.c.setFont("AvenirNext-Medium", 8.45)
         self.c.setFillColor(MUTED)
         self.c.drawRightString(RIGHT, self.y, venue)
-        self.y -= 9.4
+        self.y -= 9.7
         for line in lines:
-            self.plain(line, size=8.25, leading=9.15)
+            self.marked_text(line, LEFT, size=8.4, leading=9.45)
         self.y -= 5.0
 
     def save(self):
@@ -168,54 +214,55 @@ def build():
             ("  |  ", False, None),
             ("linkedin.com/in/liuyuche", True, "https://www.linkedin.com/in/liuyuche/"),
         ],
-        size=8.65,
+        size=8.75,
     )
-    r.y -= 12
+    r.y -= 12.5
     r.center(
         "AI systems engineer building RL training infrastructure, search/data pipelines, and research-grade open-source tools.",
         font="AvenirNext",
-        size=8.7,
+        size=8.85,
         color=MUTED,
     )
+    r.y -= 8
 
     r.section("Education")
     for degree, school, gpa, date in [
         ("M.S. Computer Science", "University of Pennsylvania, Philadelphia", "GPA: 3.80/4.00", "May 2025"),
         ("B.S. Applied Economics", "Pennsylvania State University, State College", "GPA: 3.86/4.00", "May 2023"),
     ]:
-        r.c.setFont("AvenirNext-Bold", 8.8)
+        r.c.setFont("AvenirNext-Bold", 8.9)
         r.c.setFillColor(INK)
         r.c.drawString(LEFT, r.y, degree)
-        r.c.setFont("AvenirNext", 8.7)
+        r.c.setFont("AvenirNext", 8.85)
         r.c.drawString(LEFT + 139, r.y, school)
         r.c.drawString(RIGHT - 142, r.y, gpa)
         r.c.drawRightString(RIGHT, r.y, date)
-        r.y -= 11.6
+        r.y -= 11.9
 
     r.section("Work Experience")
     r.role("Software Engineer, Search Infrastructure", "DoorDash", "Aug 2025 - Present", "Seattle, WA")
     for item in [
-        "Built Notus, a next-generation search ingestion platform using Iceberg, Kafka, and Spark to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.",
-        "Built Vela, Argo's hybrid retrieval platform, enabling Lucene-native hybrid search and federated retrieval with vector backends such as Milvus behind a single API.",
-        "Migrated 30+ production stacks to modular Jsonnet, eliminating roughly 56,000 lines of duplicate configuration and reducing config verification time by 90%.",
-        "Stabilized production indexers with 500GB EBS storage, pre-deployment validators, and Kyverno guardrails after RCA for $21K revenue-risk incidents, preventing capacity-related outages.",
+        "Built **Notus**, a next-generation search ingestion platform using **Iceberg, Kafka, and Spark** to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.",
+        "Built **Vela**, Argo's hybrid retrieval platform, enabling **Lucene-native hybrid search** and federated retrieval with vector backends such as **Milvus** behind a single API.",
+        "Migrated **30+ production stacks** to modular **Jsonnet**, eliminating roughly **56,000 lines** of duplicate configuration and reducing config verification time by **90%**.",
+        "Stabilized production indexers with **500GB EBS storage**, pre-deployment validators, and **Kyverno guardrails** after RCA for **$21K revenue-risk incidents**, preventing capacity-related outages.",
     ]:
         r.bullet(item)
     r.y -= 5
 
     r.role("Software Engineering Intern", "Penn Medicine TissueLab", "Oct 2024 - May 2025", "Philadelphia, PA")
     for item in [
-        "Developed a Python/FastAPI AI microservice platform to orchestrate PyTorch models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.",
-        "Implemented an event-driven DAG workflow engine for async task execution, processing 10,000+ pathology images daily and streaming 12M+ imaging events through WebSockets with sub-10ms latency.",
-        "Integrated generative and discriminative deep learning models into a unified service layer with asynchronous REST APIs for cross-department usage.",
+        "Developed a **Python/FastAPI** AI microservice platform to orchestrate **PyTorch** models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.",
+        "Implemented an event-driven **DAG workflow engine** for async task execution, processing **10,000+ pathology images daily** and streaming **12M+ imaging events** through WebSockets with sub-10ms latency.",
+        "Integrated generative and discriminative deep learning models into a unified service layer with **asynchronous REST APIs** for cross-department usage.",
     ]:
         r.bullet(item)
     r.y -= 5
 
     r.role("Software Engineering Intern", "Information Technology of CAS", "Apr 2024 - Aug 2024", "Remote")
     for item in [
-        "Designed Kafka and Redis-backed event streaming services that reduced p95 API latency from 2s to 200ms while processing millions of IoT events.",
-        "Contributed to distributed Spring Boot monitoring services, delivered 35+ REST APIs, and maintained 99.7% uptime in Unix-based production environments.",
+        "Designed **Kafka and Redis-backed** event streaming services that reduced **p95 API latency from 2s to 200ms** while processing millions of IoT events.",
+        "Contributed to distributed **Spring Boot** monitoring services, delivered **35+ REST APIs**, and maintained **99.7% uptime** in Unix-based production environments.",
     ]:
         r.bullet(item)
 
@@ -224,17 +271,17 @@ def build():
         (
             "nanoRL",
             "https://github.com/RiddleHe/nanochat",
-            "Led an open-source RL training framework inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and vLLM inference serving.",
+            "Led an open-source **RL training framework** inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and **vLLM inference serving**.",
         ),
         (
             "nanochat",
             "https://github.com/RiddleHe/nanochat",
-            "Built a hackable pretraining and chat stack supporting architecture definition and FLOP-controlled model ablations.",
+            "Built a hackable pretraining and chat stack supporting architecture definition and **FLOP-controlled model ablations**.",
         ),
         (
             "llm-interp",
             "https://github.com/RiddleHe/llm-interp",
-            "Authored reproducible interpretability scripts for model circuit research, including attention-sink analysis and reproductions of LLM decode indeterminism findings.",
+            "Authored reproducible interpretability scripts for model circuit research, including **attention-sink analysis** and reproductions of **LLM decode indeterminism** findings.",
         ),
     ]
     for name, url, desc in projects:
@@ -248,8 +295,8 @@ def build():
         "EMNLP 2026, under review",
         "https://arxiv.org/abs/2606.02780",
         [
-            "Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, finding that deep layers benefit from context-free value vectors that preserve original token information.",
-            "Proposed Bank of Values, a learned value-vector table for the last third of layers that eliminates the V cache and improves validation loss and average scores across 21 benchmarks on 135M and 780M models.",
+            "Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, finding that deep layers benefit from **context-free value vectors** that preserve original token information.",
+            "Proposed **Bank of Values**, a learned value-vector table for the last third of layers that eliminates the **V cache** and improves validation loss and average scores across **21 benchmarks** on **135M and 780M** models.",
         ],
     )
     r.paper(
@@ -257,7 +304,7 @@ def build():
         "ECCV 2026, under review",
         "https://arxiv.org/abs/2509.21576",
         [
-            "Studied whether VLMs can formalize visual planning tasks into solver-executable PDDL problem files.",
+            "Studied whether **VLMs** can formalize visual planning tasks into solver-executable **PDDL problem files**.",
         ],
     )
     r.paper(
@@ -265,15 +312,15 @@ def build():
         "Nature, under review",
         "https://arxiv.org/abs/2509.20279",
         [
-            "Built agentic medical-imaging workflows for tool selection, planning, knowledge updates, and human-in-the-loop co-evolution.",
+            "Built agentic medical-imaging workflows for **tool selection, planning, knowledge updates**, and human-in-the-loop co-evolution.",
         ],
     )
 
     r.section("Skills")
     r.plain(
         "Languages: Python, Kotlin, Java, C++, JavaScript; ML/Infra: PyTorch, vLLM, Spark, Kafka, Iceberg, Delta Lake, FastAPI, Redis, Docker, Kubernetes, AWS, Spring Boot",
-        size=8.35,
-        leading=9.25,
+        size=8.5,
+        leading=9.45,
     )
 
     if r.y < 38:

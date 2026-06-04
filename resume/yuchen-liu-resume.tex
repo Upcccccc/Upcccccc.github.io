@@ -47,6 +47,7 @@
   \href{https://www.linkedin.com/in/liuyuche/}{linkedin.com/in/liuyuche}\\
   \vspace{2pt}
   \textcolor{muted}{AI systems engineer building RL training infrastructure, search/data pipelines, and research-grade open-source tools.}
+  \vspace{8pt}
 \end{center}
 
 \section*{Education}
@@ -56,52 +57,52 @@
 \section*{Experience}
 \resumeRole{Software Engineer, Search Infrastructure}{Aug 2025 -- Present}{DoorDash}{Seattle, WA}
 \begin{itemize}
-  \item Built \textbf{Notus}, a next-generation search ingestion platform using Iceberg, Kafka, and Spark to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.
-  \item Built \textbf{Vela}, Argo's hybrid retrieval platform, enabling Lucene-native hybrid search and federated retrieval with vector backends such as Milvus behind a single API.
-  \item Migrated 30+ production stacks to modular Jsonnet, eliminating roughly 56K lines of duplicate configuration and reducing config verification time by 90\%.
-  \item Stabilized production indexers with 500GB EBS storage, pre-deployment validators, and Kyverno guardrails after RCA for \$21K revenue-risk incidents, preventing capacity-related outages.
+  \item Built \textbf{Notus}, a next-generation search ingestion platform using \textbf{Iceberg, Kafka, and Spark} to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.
+  \item Built \textbf{Vela}, Argo's hybrid retrieval platform, enabling \textbf{Lucene-native hybrid search} and federated retrieval with vector backends such as \textbf{Milvus} behind a single API.
+  \item Migrated \textbf{30+ production stacks} to modular \textbf{Jsonnet}, eliminating roughly \textbf{56K lines} of duplicate configuration and reducing config verification time by \textbf{90\%}.
+  \item Stabilized production indexers with \textbf{500GB EBS storage}, pre-deployment validators, and \textbf{Kyverno guardrails} after RCA for \textbf{\$21K revenue-risk incidents}, preventing capacity-related outages.
 \end{itemize}
 \vspace{4pt}
 
 \resumeRole{Software Engineering Intern}{Oct 2024 -- May 2025}{Penn Medicine TissueLab}{Philadelphia, PA}
 \begin{itemize}
-  \item Developed a Python/FastAPI microservice platform to orchestrate PyTorch models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.
-  \item Implemented an event-driven DAG workflow engine for async task execution, processing 10K+ pathology images daily and streaming 12M+ imaging events through WebSockets with sub-10ms latency.
-  \item Integrated generative and discriminative deep learning models into a unified service layer with asynchronous APIs for cross-department usage.
+  \item Developed a \textbf{Python/FastAPI} microservice platform to orchestrate \textbf{PyTorch} models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.
+  \item Implemented an event-driven \textbf{DAG workflow engine} for async task execution, processing \textbf{10K+ pathology images daily} and streaming \textbf{12M+ imaging events} through WebSockets with sub-10ms latency.
+  \item Integrated generative and discriminative deep learning models into a unified service layer with \textbf{asynchronous APIs} for cross-department usage.
 \end{itemize}
 \vspace{4pt}
 
 \resumeRole{Software Engineering Intern}{Apr 2024 -- Aug 2024}{Information Technology of CAS}{Remote}
 \begin{itemize}
-  \item Designed Kafka and Redis-backed event streaming services that reduced p95 API latency from 2s to 200ms while processing millions of IoT events.
-  \item Contributed to distributed Spring Boot monitoring services, delivered 35+ REST APIs, and maintained 99.7\% uptime in Unix-based production environments.
+  \item Designed \textbf{Kafka and Redis-backed} event streaming services that reduced \textbf{p95 API latency from 2s to 200ms} while processing millions of IoT events.
+  \item Contributed to distributed \textbf{Spring Boot} monitoring services, delivered \textbf{35+ REST APIs}, and maintained \textbf{99.7\% uptime} in Unix-based production environments.
 \end{itemize}
 
 \section*{Open Source}
 \href{https://github.com/RiddleHe/nanochat}{\textbf{nanoRL}}
 \begin{itemize}
-  \item Led an open-source RL training framework inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and production-grade vLLM inference serving.
+  \item Led an open-source \textbf{RL training framework} inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and \textbf{vLLM inference serving}.
 \end{itemize}
 \vspace{2pt}
 \href{https://github.com/RiddleHe/nanochat}{\textbf{nanochat}}
 \begin{itemize}
-  \item Built a hackable pretraining and chat stack supporting architecture definition and FLOP-controlled model ablations.
+  \item Built a hackable pretraining and chat stack supporting architecture definition and \textbf{FLOP-controlled model ablations}.
 \end{itemize}
 \vspace{2pt}
 \href{https://github.com/RiddleHe/llm-interp}{\textbf{llm-interp}}
 \begin{itemize}
-  \item Authored reproducible interpretability scripts for model circuit research, including attention-sink analysis and reproductions of LLM decode indeterminism findings.
+  \item Authored reproducible interpretability scripts for model circuit research, including \textbf{attention-sink analysis} and reproductions of \textbf{LLM decode indeterminism} findings.
 \end{itemize}
 
 \section*{Research}
 \href{https://arxiv.org/abs/2606.02780}{\textbf{Do Value Vectors in Deep Layers Need Context from the Residual Stream?}} \hfill EMNLP 2026, under review\\
-Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, discovering that deep layers benefit from context-free value vectors that preserve original token information and decouple optimal inputs for keys vs. values. Proposed Bank of Values, a learned value-vector table for the last third of layers that eliminates the V cache and improves validation loss and average scores across 21 benchmarks on 135M and 780M models.\\
+Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, discovering that deep layers benefit from \textbf{context-free value vectors} that preserve original token information and decouple optimal inputs for keys vs. values. Proposed \textbf{Bank of Values}, a learned value-vector table for the last third of layers that eliminates the \textbf{V cache} and improves validation loss and average scores across \textbf{21 benchmarks} on \textbf{135M and 780M} models.\\
 \vspace{3pt}
 \href{https://arxiv.org/abs/2509.21576}{\textbf{Vision Language Models Cannot Plan, but Can They Formalize?}} \hfill ECCV 2026, under review\\
-Studied whether VLMs can formalize visual planning tasks into solver-executable PDDL problem files.\\
+Studied whether \textbf{VLMs} can formalize visual planning tasks into solver-executable \textbf{PDDL problem files}.\\
 \vspace{3pt}
 \href{https://arxiv.org/abs/2509.20279}{\textbf{A co-evolving agentic AI system for medical imaging analysis}} \hfill Nature, under review\\
-Built agentic medical-imaging workflows for tool selection, planning, knowledge updates, and human-in-the-loop co-evolution.
+Built agentic medical-imaging workflows for \textbf{tool selection, planning, knowledge updates}, and human-in-the-loop co-evolution.
 
 \section*{Skills}
 \textbf{Languages:} Python, Kotlin, Java, C++, JavaScript;
