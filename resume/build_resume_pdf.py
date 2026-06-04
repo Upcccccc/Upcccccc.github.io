@@ -22,24 +22,20 @@ MUTED = colors.HexColor("#5a5a55")
 RULE = colors.HexColor("#b8b8b0")
 LINK = colors.HexColor("#0645ad")
 
-GEORGIA = "/System/Library/Fonts/Supplemental/Georgia.ttf"
-GEORGIA_BOLD = "/System/Library/Fonts/Supplemental/Georgia Bold.ttf"
 AVENIR_NEXT = "/System/Library/Fonts/Avenir Next.ttc"
 
 
 def register_fonts():
-    pdfmetrics.registerFont(TTFont("GeorgiaCustom", GEORGIA))
-    pdfmetrics.registerFont(TTFont("GeorgiaCustom-Bold", GEORGIA_BOLD))
     pdfmetrics.registerFont(TTFont("AvenirNext", AVENIR_NEXT, subfontIndex=7))
     pdfmetrics.registerFont(TTFont("AvenirNext-Bold", AVENIR_NEXT, subfontIndex=0))
     pdfmetrics.registerFont(TTFont("AvenirNext-Medium", AVENIR_NEXT, subfontIndex=5))
 
 
-def width(text, font="AvenirNext", size=8.7):
+def width(text, font="AvenirNext", size=9.0):
     return stringWidth(text, font, size)
 
 
-def wrap(text, max_width, font="AvenirNext", size=8.7):
+def wrap(text, max_width, font="AvenirNext", size=9.0):
     words = text.split()
     lines = []
     line = ""
@@ -67,7 +63,7 @@ def marked_tokens(text, base_font="AvenirNext", bold_font="AvenirNext-Bold"):
     return tokens
 
 
-def wrap_marked(text, max_width, size=8.8):
+def wrap_marked(text, max_width, size=9.0):
     lines = []
     current = []
     current_width = 0
@@ -103,7 +99,7 @@ class ResumeCanvas:
         self.c.setFillColor(color)
         self.c.drawCentredString(PAGE_W / 2, self.y, text)
 
-    def center_links(self, parts, size=8.8):
+    def center_links(self, parts, size=9.0):
         total = sum(width(text, "AvenirNext", size) for text, _, _ in parts)
         x = (PAGE_W - total) / 2
         self.c.setFont("AvenirNext", size)
@@ -116,16 +112,16 @@ class ResumeCanvas:
             x += part_w
 
     def section(self, title):
-        self.y -= 11.5
-        self.c.setFont("GeorgiaCustom-Bold", 13.1)
+        self.y -= 12.7
+        self.c.setFont("AvenirNext-Bold", 12.9)
         self.c.setFillColor(INK)
         self.c.drawString(LEFT, self.y, title.upper())
         self.c.setStrokeColor(RULE)
         self.c.setLineWidth(0.65)
         self.c.line(LEFT, self.y - 4.5, RIGHT, self.y - 4.5)
-        self.y -= 15.5
+        self.y -= 16.3
 
-    def plain(self, text, size=8.75, leading=9.85, left=LEFT, font="AvenirNext", color=INK):
+    def plain(self, text, size=9.0, leading=10.2, left=LEFT, font="AvenirNext", color=INK):
         self.c.setFont(font, size)
         self.c.setFillColor(color)
         lines = wrap(text, RIGHT - left, font=font, size=size)
@@ -133,7 +129,7 @@ class ResumeCanvas:
             self.c.drawString(left, self.y - i * leading, line)
         self.y -= len(lines) * leading + 1.8
 
-    def marked_text(self, text, left, size=8.8, leading=10.05, max_width=None):
+    def marked_text(self, text, left, size=9.0, leading=10.25, max_width=None):
         lines = wrap_marked(text, max_width or RIGHT - left, size=size)
         self.c.setFillColor(INK)
         for i, line in enumerate(lines):
@@ -145,50 +141,50 @@ class ResumeCanvas:
                 x += width(token, font, size)
         self.y -= len(lines) * leading + 1.4
 
-    def bullet(self, text, size=8.8, leading=10.05):
+    def bullet(self, text, size=9.0, leading=10.25):
         indent = 15
         self.c.setFillColor(INK)
         self.c.circle(LEFT + 5, self.y + 2.2, 1.1, fill=1, stroke=0)
         self.marked_text(text, LEFT + indent, size=size, leading=leading, max_width=RIGHT - LEFT - indent)
 
     def role(self, title, org, dates, location):
-        self.c.setFont("AvenirNext-Bold", 9.35)
+        self.c.setFont("AvenirNext-Bold", 9.55)
         self.c.setFillColor(INK)
         self.c.drawString(LEFT, self.y, title)
 
         right = f"{dates} | {location}"
-        self.c.setFont("AvenirNext-Medium", 8.95)
+        self.c.setFont("AvenirNext-Medium", 9.15)
         self.c.setFillColor(MUTED)
         self.c.drawRightString(RIGHT, self.y, right)
 
-        org_x = LEFT + width(title, "AvenirNext-Bold", 9.35) + 7
-        max_org_right = RIGHT - width(right, "AvenirNext-Medium", 8.95) - 12
+        org_x = LEFT + width(title, "AvenirNext-Bold", 9.55) + 7
+        max_org_right = RIGHT - width(right, "AvenirNext-Medium", 9.15) - 12
         org_text = f"| {org}"
-        if org_x + width(org_text, "AvenirNext-Medium", 8.95) < max_org_right:
+        if org_x + width(org_text, "AvenirNext-Medium", 9.15) < max_org_right:
             self.c.drawString(org_x, self.y, org_text)
-        self.y -= 10.8
+        self.y -= 11.1
 
     def project(self, name, url):
-        self.c.setFont("AvenirNext-Bold", 9.15)
+        self.c.setFont("AvenirNext-Bold", 9.3)
         self.c.setFillColor(LINK)
         self.c.drawString(LEFT, self.y, name)
-        link_w = width(name, "AvenirNext-Bold", 9.15)
+        link_w = width(name, "AvenirNext-Bold", 9.3)
         self.c.linkURL(url, (LEFT, self.y - 2, LEFT + link_w, self.y + 10), relative=0)
-        self.y -= 9.7
+        self.y -= 10.1
 
     def paper(self, title, venue, url, lines):
-        self.c.setFont("AvenirNext-Bold", 8.9)
+        self.c.setFont("AvenirNext-Bold", 9.15)
         self.c.setFillColor(LINK)
         self.c.drawString(LEFT, self.y, title)
-        title_w = width(title, "AvenirNext-Bold", 8.9)
+        title_w = width(title, "AvenirNext-Bold", 9.15)
         self.c.linkURL(url, (LEFT, self.y - 2, LEFT + title_w, self.y + 10), relative=0)
-        self.c.setFont("AvenirNext-Medium", 8.45)
+        self.c.setFont("AvenirNext-Medium", 8.85)
         self.c.setFillColor(MUTED)
         self.c.drawRightString(RIGHT, self.y, venue)
-        self.y -= 9.7
+        self.y -= 10.4
         for line in lines:
-            self.marked_text(line, LEFT, size=8.4, leading=9.45)
-        self.y -= 5.0
+            self.bullet(line, size=8.65, leading=9.75)
+        self.y -= 5.5
 
     def save(self):
         self.c.save()
@@ -198,10 +194,10 @@ def build():
     register_fonts()
     r = ResumeCanvas(OUT)
 
-    r.c.setFont("GeorgiaCustom-Bold", 28)
+    r.c.setFont("AvenirNext-Bold", 27)
     r.c.setFillColor(INK)
     r.c.drawCentredString(PAGE_W / 2, r.y, "Yuchen Liu")
-    r.y -= 17
+    r.y -= 18
     r.center_links(
         [
             ("Seattle, WA", False, None),
@@ -214,30 +210,30 @@ def build():
             ("  |  ", False, None),
             ("linkedin.com/in/liuyuche", True, "https://www.linkedin.com/in/liuyuche/"),
         ],
-        size=8.75,
+        size=8.95,
     )
-    r.y -= 12.5
+    r.y -= 13.2
     r.center(
         "AI systems engineer building RL training infrastructure, search/data pipelines, and research-grade open-source tools.",
         font="AvenirNext",
-        size=8.85,
+        size=9.0,
         color=MUTED,
     )
-    r.y -= 8
+    r.y -= 10.5
 
     r.section("Education")
     for degree, school, gpa, date in [
         ("M.S. Computer Science", "University of Pennsylvania, Philadelphia", "GPA: 3.80/4.00", "May 2025"),
         ("B.S. Applied Economics", "Pennsylvania State University, State College", "GPA: 3.86/4.00", "May 2023"),
     ]:
-        r.c.setFont("AvenirNext-Bold", 8.9)
+        r.c.setFont("AvenirNext-Bold", 9.1)
         r.c.setFillColor(INK)
         r.c.drawString(LEFT, r.y, degree)
-        r.c.setFont("AvenirNext", 8.85)
+        r.c.setFont("AvenirNext", 9.0)
         r.c.drawString(LEFT + 139, r.y, school)
         r.c.drawString(RIGHT - 142, r.y, gpa)
         r.c.drawRightString(RIGHT, r.y, date)
-        r.y -= 11.9
+        r.y -= 12.2
 
     r.section("Work Experience")
     r.role("Software Engineer, Search Infrastructure", "DoorDash", "Aug 2025 - Present", "Seattle, WA")
@@ -248,7 +244,7 @@ def build():
         "Stabilized production indexers with **500GB EBS storage**, pre-deployment validators, and **Kyverno guardrails** after RCA for **$21K revenue-risk incidents**, preventing capacity-related outages.",
     ]:
         r.bullet(item)
-    r.y -= 5
+    r.y -= 6.5
 
     r.role("Software Engineering Intern", "Penn Medicine TissueLab", "Oct 2024 - May 2025", "Philadelphia, PA")
     for item in [
@@ -257,7 +253,7 @@ def build():
         "Integrated generative and discriminative deep learning models into a unified service layer with **asynchronous REST APIs** for cross-department usage.",
     ]:
         r.bullet(item)
-    r.y -= 5
+    r.y -= 6.5
 
     r.role("Software Engineering Intern", "Information Technology of CAS", "Apr 2024 - Aug 2024", "Remote")
     for item in [
@@ -287,7 +283,7 @@ def build():
     for name, url, desc in projects:
         r.project(name, url)
         r.bullet(desc)
-        r.y -= 3.5
+        r.y -= 4.3
 
     r.section("Research")
     r.paper(

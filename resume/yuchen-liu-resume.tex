@@ -1,8 +1,7 @@
 \documentclass[10pt,letterpaper]{article}
 \usepackage[margin=0.50in]{geometry}
 \usepackage[T1]{fontenc}
-\usepackage{tgpagella}
-\usepackage[scaled=0.92]{tgheros}
+\usepackage[scaled=0.94]{tgheros}
 \usepackage[hidelinks]{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -18,7 +17,7 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 \setlist[itemize]{leftmargin=1.2em,itemsep=2.5pt,topsep=2pt,parsep=0pt,partopsep=0pt}
-\newcommand{\headingfont}{\fontfamily{qpl}\selectfont}
+\newcommand{\headingfont}{\sffamily}
 \titleformat{\section}{\headingfont\Large\bfseries\color{ink}}{}{0pt}{}[\vspace{2pt}\color{rule}\titlerule]
 \titlespacing*{\section}{0pt}{10pt}{6pt}
 \renewcommand{\familydefault}{\sfdefault}
@@ -39,7 +38,7 @@
 \begin{document}
 
 \begin{center}
-  {\headingfont\Huge \textbf{Yuchen Liu}}\\[-1pt]
+  {\Huge \textbf{Yuchen Liu}}\\[-1pt]
   Seattle, WA \quad | \quad
   \href{mailto:yql6113@gmail.com}{yql6113@gmail.com} \quad | \quad
   814-876-2346 \quad | \quad
@@ -96,13 +95,20 @@
 
 \section*{Research}
 \href{https://arxiv.org/abs/2606.02780}{\textbf{Do Value Vectors in Deep Layers Need Context from the Residual Stream?}} \hfill EMNLP 2026, under review\\
-Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, discovering that deep layers benefit from \textbf{context-free value vectors} that preserve original token information and decouple optimal inputs for keys vs. values. Proposed \textbf{Bank of Values}, a learned value-vector table for the last third of layers that eliminates the \textbf{V cache} and improves validation loss and average scores across \textbf{21 benchmarks} on \textbf{135M and 780M} models.\\
-\vspace{3pt}
+\begin{itemize}
+  \item Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, discovering that deep layers benefit from \textbf{context-free value vectors} that preserve original token information.
+  \item Proposed \textbf{Bank of Values}, a learned value-vector table for the last third of layers that eliminates the \textbf{V cache} and improves validation loss and average scores across \textbf{21 benchmarks} on \textbf{135M and 780M} models.
+\end{itemize}
+\vspace{2pt}
 \href{https://arxiv.org/abs/2509.21576}{\textbf{Vision Language Models Cannot Plan, but Can They Formalize?}} \hfill ECCV 2026, under review\\
-Studied whether \textbf{VLMs} can formalize visual planning tasks into solver-executable \textbf{PDDL problem files}.\\
-\vspace{3pt}
+\begin{itemize}
+  \item Studied whether \textbf{VLMs} can formalize visual planning tasks into solver-executable \textbf{PDDL problem files}.
+\end{itemize}
+\vspace{2pt}
 \href{https://arxiv.org/abs/2509.20279}{\textbf{A co-evolving agentic AI system for medical imaging analysis}} \hfill Nature, under review\\
-Built agentic medical-imaging workflows for \textbf{tool selection, planning, knowledge updates}, and human-in-the-loop co-evolution.
+\begin{itemize}
+  \item Built agentic medical-imaging workflows for \textbf{tool selection, planning, knowledge updates}, and human-in-the-loop co-evolution.
+\end{itemize}
 
 \section*{Skills}
 \textbf{Languages:} Python, Kotlin, Java, C++, JavaScript;
