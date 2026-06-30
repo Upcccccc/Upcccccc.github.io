@@ -6,7 +6,7 @@
     <title>Yuchen Liu</title>
     <meta
       name="description"
-      content="Yuchen Liu builds RL training infrastructure, data/search systems, and research-grade open-source tools."
+      content="Yuchen Liu builds production-scale search and AI infrastructure, hybrid retrieval systems, and research-grade LLM tooling."
     >
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -17,7 +17,7 @@
         <a href="#work">Projects</a>
         <a href="#experience">Experience</a>
         <a href="#research">Research</a>
-        <a href="#open-source">Open source</a>
+        <a href="#open-source">AI systems</a>
         <a href="resume/">Resume</a>
         <a href="https://github.com/Upcccccc">GitHub</a>
       </nav>
@@ -26,16 +26,17 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">AI systems engineer</p>
+          <p class="eyebrow">Search / AI infrastructure engineer</p>
           <h1 id="hero-title">
-            I build the infrastructure around model research: RL training stacks,
-            data/search pipelines, and reproducible open-source tools.
+            I build production-scale search and AI infrastructure for model
+            research: streaming indexing, hybrid retrieval, and reproducible
+            LLM/RL tooling.
           </h1>
           <p class="hero-text">
-            My work sits between research and production systems: nanoRL for
-            hackable RL algorithm research, DoorDash search ingestion and hybrid
-            retrieval platforms, and publications on model architecture, planning,
-            and agentic medical imaging systems.
+            My work sits between research and production systems: company-scale
+            indexing and retrieval infrastructure, nanoRL for hackable RL
+            experiments, and co-first-author research on LLM architecture and
+            mechanistic interpretability.
           </p>
           <div class="hero-links" aria-label="Profile links">
             <a href="https://github.com/Upcccccc">GitHub</a>
@@ -51,12 +52,12 @@
             <strong>Open-source RL training framework for objectives, rollouts, vLLM-backed serving, and reproducible experiments.</strong>
           </div>
           <div class="fit-row">
-            <span class="fit-kicker">02 · Notus / Vela</span>
-            <strong>Search ingestion and hybrid retrieval platforms with Spark, Kafka, Iceberg, Lucene, and vector backends.</strong>
+            <span class="fit-kicker">02 · Search infra</span>
+            <strong>Streaming indexing and Lucene-native hybrid retrieval systems with Spark, Kafka, Iceberg, and dense embeddings.</strong>
           </div>
           <div class="fit-row">
             <span class="fit-kicker">03 · Research systems</span>
-            <strong>LLM mechanisms, VLM formalization, and agentic medical imaging work grounded in runnable tooling.</strong>
+            <strong>LLM mechanisms, VLM formalization, and agentic medical imaging work grounded in experiments and runnable tooling.</strong>
           </div>
         </div>
       </section>
@@ -64,7 +65,7 @@
       <section class="section" id="work" aria-labelledby="work-title">
         <div class="section-heading">
           <p class="eyebrow">Selected work</p>
-          <h2 id="work-title">Systems that make research move faster</h2>
+          <h2 id="work-title">Selected AI systems projects</h2>
         </div>
 
         <div class="feature-grid">
@@ -72,9 +73,9 @@
             <span class="card-index">01</span>
             <h3>nanoRL</h3>
             <p>
-              Led an open-source RL training framework inside nanochat for clean
-              objective definitions, RL algorithm research, and production-grade
-              vLLM inference serving.
+              Led an open-source RL training framework inside nanochat for
+              objective design, rollout experiments, reproducible ablations, and
+              vLLM-backed inference serving.
             </p>
             <ul class="tag-list" aria-label="nanoRL keywords">
               <li>RL training</li>
@@ -88,8 +89,8 @@
             <span class="card-index">02</span>
             <h3>Search and data infrastructure</h3>
             <p>
-              Built DoorDash search ingestion and hybrid retrieval platforms with
-              Kafka, Spark, Iceberg, Lucene, and vector backends behind stable APIs.
+              Built production indexing and hybrid retrieval infrastructure with
+              Kafka, Spark, Iceberg, Lucene, BM25 retrieval, and dense embeddings.
             </p>
             <ul class="tag-list" aria-label="Data infrastructure keywords">
               <li>Spark</li>
@@ -103,8 +104,8 @@
             <span class="card-index">03</span>
             <h3>Research-grade model systems</h3>
             <p>
-              Co-authored work on value vectors, VLM formalization, and agentic
-              medical imaging systems, with an emphasis on mechanisms and tooling.
+              Co-authored LLM architecture, VLM formalization, and agentic medical
+              imaging work, with an emphasis on mechanisms, ablations, and tooling.
             </p>
             <ul class="tag-list" aria-label="Research keywords">
               <li>LLMs</li>
@@ -119,7 +120,7 @@
       <section class="section split-section" id="experience" aria-labelledby="experience-title">
         <div class="section-heading sticky-heading">
           <p class="eyebrow">Experience</p>
-          <h2 id="experience-title">Production systems, with research taste</h2>
+          <h2 id="experience-title">Production systems with research taste</h2>
         </div>
 
         <div class="timeline">
@@ -129,14 +130,15 @@
               <p>DoorDash · Aug 2025 - Present</p>
             </div>
             <p>
-              Built Notus, a next-generation search ingestion platform using
-              Iceberg, Kafka, and Spark to decouple document ingestion from
-              serving and support configuration-driven indexing into multiple
-              backends.
+              Owned core components of a next-generation search ingestion
+              platform, re-architecting indexing write paths across production
+              search stacks, sharded indexers, large document corpora, and tens
+              of TB of index storage.
             </p>
             <p>
-              Built Vela, Argo's hybrid retrieval platform, enabling Lucene-native
-              hybrid search and federated vector retrieval through a single API.
+              Designed streaming incremental indexing with Kafka, Iceberg, Spark,
+              watermarks, and exact cutover offsets; productionized Lucene-native
+              hybrid retrieval that fuses BM25 with dense embeddings.
             </p>
           </article>
 
@@ -148,8 +150,8 @@
             <p>
               Developed a FastAPI/PyTorch microservice platform and event-driven
               DAG workflow engine for medical image analysis, supporting natural
-              language-driven orchestration over segmentation and classification
-              tools.
+              language-driven orchestration over PyTorch-based segmentation and
+              classification tools.
             </p>
           </article>
 
@@ -180,9 +182,9 @@
               <p class="paper-meta">EMNLP 2026 · Under review</p>
               <h3>Do Value Vectors in Deep Layers Need Context from the Residual Stream?</h3>
               <p>
-                Proposes context-free value vector tables for deep layers,
-                eliminating the V cache and improving validation loss and average
-                benchmark scores across 21 evaluations.
+                Co-develops the hypothesis that late-layer value vectors can
+                encode context-free token information, with controlled
+                architecture ablations across 21 benchmarks.
               </p>
             </div>
           </a>
@@ -194,8 +196,8 @@
               <h3>Vision Language Models Cannot Plan, but Can They Formalize?</h3>
               <p>
                 Studies whether VLMs can turn visual observations and natural
-                language goals into formal planning problems that deterministic
-                solvers can execute.
+                language goals into solver-executable PDDL problem files, with
+                formalization and solver-based correctness checks.
               </p>
             </div>
           </a>
@@ -206,9 +208,8 @@
               <p class="paper-meta">Nature · Under review</p>
               <h3>A co-evolving agentic AI system for medical imaging analysis</h3>
               <p>
-                Builds an agentic system for medical image analysis that plans,
-                selects tools, updates knowledge, and co-evolves with human
-                feedback in pathology workflows.
+                Co-develops agentic medical-imaging workflows for tool selection,
+                planning, knowledge updates, and human-in-the-loop co-evolution.
               </p>
             </div>
           </a>
@@ -217,14 +218,14 @@
 
       <section class="section" id="open-source" aria-labelledby="oss-title">
         <div class="section-heading">
-          <p class="eyebrow">Open source</p>
+          <p class="eyebrow">AI systems projects</p>
           <h2 id="oss-title">Small stacks for serious experiments</h2>
         </div>
 
         <div class="repo-list">
           <a class="repo-row" href="https://github.com/RiddleHe/nanochat">
             <span>nanoRL</span>
-            <p>RL training framework for objective design, rollout experiments, and vLLM-backed serving.</p>
+            <p>RL training framework for objective design, rollout experiments, reproducible ablations, and vLLM-backed serving.</p>
           </a>
           <a class="repo-row" href="https://github.com/RiddleHe/nanochat">
             <span>nanochat</span>

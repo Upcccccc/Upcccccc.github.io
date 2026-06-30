@@ -119,7 +119,7 @@ class ResumeCanvas:
         self.c.setStrokeColor(RULE)
         self.c.setLineWidth(0.65)
         self.c.line(LEFT, self.y - 4.5, RIGHT, self.y - 4.5)
-        self.y -= 16.3
+        self.y -= 15.7
 
     def plain(self, text, size=9.0, leading=10.2, left=LEFT, font="AvenirNext", color=INK):
         self.c.setFont(font, size)
@@ -214,12 +214,12 @@ def build():
     )
     r.y -= 13.2
     r.center(
-        "AI systems engineer building RL training infrastructure, search/data pipelines, and research-grade open-source tools.",
+        "Search/AI infrastructure engineer building production-scale indexing, hybrid retrieval, and co-first-author LLM/mech interp research.",
         font="AvenirNext",
-        size=9.0,
+        size=8.45,
         color=MUTED,
     )
-    r.y -= 10.5
+    r.y -= 9.0
 
     r.section("Education")
     for degree, school, gpa, date in [
@@ -238,46 +238,38 @@ def build():
     r.section("Work Experience")
     r.role("Software Engineer, Search Infrastructure", "DoorDash", "Aug 2025 - Present", "Seattle, WA")
     for item in [
-        "Built **Notus**, a next-generation search ingestion platform using **Iceberg, Kafka, and Spark** to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.",
-        "Built **Vela**, Argo's hybrid retrieval platform, enabling **Lucene-native hybrid search** and federated retrieval with vector backends such as **Milvus** behind a single API.",
-        "Migrated **30+ production stacks** to modular **Jsonnet**, eliminating roughly **56,000 lines** of duplicate configuration and reducing config verification time by **90%**.",
-        "Stabilized production indexers with **500GB EBS storage**, pre-deployment validators, and **Kyverno guardrails** after RCA for **$21K revenue-risk incidents**, preventing capacity-related outages.",
+        "Owned core components of a **next-generation search ingestion platform**, re-architecting the indexing write path across **~40 production search stacks**, hundreds of sharded indexer instances, billions of indexed documents, and tens of TB of index storage.",
+        "Designed a **streaming incremental-indexing framework** using **Kafka, Iceberg, Spark**, per-namespace watermarks, and exact consumer cutover offsets, sustaining millions of document updates per cycle while preventing missed or double-applied updates.",
+        "Productionized a **Lucene-native hybrid retrieval layer** that fuses **BM25 keyword retrieval** with open-source dense embeddings into a single query plan, consolidating semantic search previously served through a standalone vector retrieval stack.",
+        "Migrated **30+ production stacks** to modular **Jsonnet** configuration, eliminating **~56K lines** of duplicate config and reducing verification time by **~90%**; added pre-deployment validators and **Kyverno guardrails** to prevent capacity regressions.",
     ]:
         r.bullet(item)
     r.y -= 6.5
 
     r.role("Software Engineering Intern", "Penn Medicine TissueLab", "Oct 2024 - May 2025", "Philadelphia, PA")
     for item in [
-        "Developed a **Python/FastAPI** AI microservice platform to orchestrate **PyTorch** models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.",
-        "Implemented an event-driven **DAG workflow engine** for async task execution, processing **10,000+ pathology images daily** and streaming **12M+ imaging events** through WebSockets with sub-10ms latency.",
-        "Integrated generative and discriminative deep learning models into a unified service layer with **asynchronous REST APIs** for cross-department usage.",
+        "Built a **Python/FastAPI ML orchestration platform** for **PyTorch-based medical-imaging workflows**, enabling natural-language-driven segmentation and classification tasks.",
+        "Implemented an event-driven **DAG workflow engine** for async task execution, processing **10K+ pathology images daily** and streaming **12M+ imaging events** through WebSockets.",
     ]:
         r.bullet(item)
     r.y -= 6.5
 
-    r.role("Software Engineering Intern", "Information Technology of CAS", "Apr 2024 - Aug 2024", "Remote")
-    for item in [
-        "Designed **Kafka and Redis-backed** event streaming services that reduced **p95 API latency from 2s to 200ms** while processing millions of IoT events.",
-        "Contributed to distributed **Spring Boot** monitoring services, delivered **35+ REST APIs**, and maintained **99.7% uptime** in Unix-based production environments.",
-    ]:
-        r.bullet(item)
-
-    r.section("Open Source")
+    r.section("Selected AI Systems Projects")
     projects = [
         (
             "nanoRL",
             "https://github.com/RiddleHe/nanochat",
-            "Led an open-source **RL training framework** inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and **vLLM inference serving**.",
+            "Led an open-source **RL training framework** inside nanochat for objective design, rollout experiments, reproducible ablations, and **vLLM-backed inference serving**.",
         ),
         (
             "nanochat",
             "https://github.com/RiddleHe/nanochat",
-            "Built a hackable pretraining and chat stack supporting architecture definition and **FLOP-controlled model ablations**.",
+            "Built a hackable pretraining and chat stack for architecture definition, **FLOP-controlled ablations**, and reproducible LLM experiments.",
         ),
         (
             "llm-interp",
             "https://github.com/RiddleHe/llm-interp",
-            "Authored reproducible interpretability scripts for model circuit research, including **attention-sink analysis** and reproductions of **LLM decode indeterminism** findings.",
+            "Authored reproducible interpretability scripts for model circuit research, including **attention-sink analysis** and **LLM decode indeterminism** reproductions.",
         ),
     ]
     for name, url, desc in projects:
@@ -291,8 +283,8 @@ def build():
         "EMNLP 2026, under review",
         "https://arxiv.org/abs/2606.02780",
         [
-            "Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, finding that deep layers benefit from **context-free value vectors** that preserve original token information.",
-            "Proposed **Bank of Values**, a learned value-vector table for the last third of layers that eliminates the **V cache** and improves validation loss and average scores across **21 benchmarks** on **135M and 780M** models.",
+            "Co-first author; co-developed the central research hypothesis that late-layer Transformer value vectors may encode **context-free token information**, challenging the assumption that deep-layer attention values require residual-stream context.",
+            "Co-designed controlled architecture experiments and ablations across **135M/780M models** and **21 benchmarks**; proposed **Bank of Values**, a learned value-vector table that removes the **V-cache** while preserving downstream quality.",
         ],
     )
     r.paper(
@@ -300,24 +292,27 @@ def build():
         "ECCV 2026, under review",
         "https://arxiv.org/abs/2509.21576",
         [
-            "Studied whether **VLMs** can formalize visual planning tasks into solver-executable **PDDL problem files**.",
+            "Co-designed experiments testing whether **VLMs** can translate visual planning tasks into solver-executable **PDDL problem files**, separating perception, formalization, and planning ability.",
+            "Built evaluation pipelines for visual state extraction, goal/constraint formalization, and solver-based correctness checking.",
         ],
     )
     r.paper(
         "A co-evolving agentic AI system for medical imaging analysis",
-        "Nature, under review",
+        "Under review",
         "https://arxiv.org/abs/2509.20279",
         [
-            "Built agentic medical-imaging workflows for **tool selection, planning, knowledge updates**, and human-in-the-loop co-evolution.",
+            "Co-developed agentic medical-imaging workflows for **tool selection, planning, knowledge updates**, and human-in-the-loop co-evolution.",
         ],
     )
 
     r.section("Skills")
-    r.plain(
-        "Languages: Python, Kotlin, Java, C++, JavaScript; ML/Infra: PyTorch, vLLM, Spark, Kafka, Iceberg, Delta Lake, FastAPI, Redis, Docker, Kubernetes, AWS, Spring Boot",
-        size=8.5,
-        leading=9.45,
-    )
+    for skill_line in [
+        "**Languages:** Python, Kotlin, Java, C++, JavaScript",
+        "**ML/AI:** PyTorch, vLLM, Transformers, RL, LLM evaluation, mechanistic interpretability",
+        "**Search/Data Infra:** Lucene, Kafka, Spark, Iceberg, Delta Lake, Redis, FastAPI",
+        "**Systems/Cloud:** Docker, Kubernetes, AWS, Spring Boot",
+    ]:
+        r.marked_text(skill_line, LEFT, size=8.35, leading=9.35)
 
     if r.y < 38:
         raise RuntimeError(f"Resume overflowed: final y={r.y:.1f}")

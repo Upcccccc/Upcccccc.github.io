@@ -45,7 +45,7 @@
   \href{https://github.com/Upcccccc}{github.com/Upcccccc} \quad | \quad
   \href{https://www.linkedin.com/in/liuyuche/}{linkedin.com/in/liuyuche}\\
   \vspace{2pt}
-  \textcolor{muted}{AI systems engineer building RL training infrastructure, search/data pipelines, and research-grade open-source tools.}
+  \textcolor{muted}{Search/AI infrastructure engineer building production-scale indexing, hybrid retrieval, and co-first-author LLM/mech interp research.}
   \vspace{8pt}
 \end{center}
 
@@ -56,62 +56,58 @@
 \section*{Experience}
 \resumeRole{Software Engineer, Search Infrastructure}{Aug 2025 -- Present}{DoorDash}{Seattle, WA}
 \begin{itemize}
-  \item Built \textbf{Notus}, a next-generation search ingestion platform using \textbf{Iceberg, Kafka, and Spark} to decouple document ingestion from serving, enable configuration-driven indexing, and unblock schema evolution for hybrid search.
-  \item Built \textbf{Vela}, Argo's hybrid retrieval platform, enabling \textbf{Lucene-native hybrid search} and federated retrieval with vector backends such as \textbf{Milvus} behind a single API.
-  \item Migrated \textbf{30+ production stacks} to modular \textbf{Jsonnet}, eliminating roughly \textbf{56K lines} of duplicate configuration and reducing config verification time by \textbf{90\%}.
-  \item Stabilized production indexers with \textbf{500GB EBS storage}, pre-deployment validators, and \textbf{Kyverno guardrails} after RCA for \textbf{\$21K revenue-risk incidents}, preventing capacity-related outages.
+  \item Owned core components of a \textbf{next-generation search ingestion platform}, re-architecting the indexing write path across \textbf{\textasciitilde40 production search stacks}, hundreds of sharded indexer instances, billions of indexed documents, and tens of TB of index storage.
+  \item Designed a \textbf{streaming incremental-indexing framework} using \textbf{Kafka, Iceberg, Spark}, per-namespace watermarks, and exact consumer cutover offsets, sustaining millions of document updates per cycle while preventing missed or double-applied updates.
+  \item Productionized a \textbf{Lucene-native hybrid retrieval layer} that fuses \textbf{BM25 keyword retrieval} with open-source dense embeddings into a single query plan, consolidating semantic search previously served through a standalone vector retrieval stack.
+  \item Migrated \textbf{30+ production stacks} to modular \textbf{Jsonnet} configuration, eliminating \textbf{\textasciitilde56K lines} of duplicate config and reducing verification time by \textbf{\textasciitilde90\%}; added pre-deployment validators and \textbf{Kyverno guardrails} to prevent capacity regressions.
 \end{itemize}
 \vspace{4pt}
 
 \resumeRole{Software Engineering Intern}{Oct 2024 -- May 2025}{Penn Medicine TissueLab}{Philadelphia, PA}
 \begin{itemize}
-  \item Developed a \textbf{Python/FastAPI} microservice platform to orchestrate \textbf{PyTorch} models for medical image analysis, enabling natural-language-driven segmentation and classification workflows.
-  \item Implemented an event-driven \textbf{DAG workflow engine} for async task execution, processing \textbf{10K+ pathology images daily} and streaming \textbf{12M+ imaging events} through WebSockets with sub-10ms latency.
-  \item Integrated generative and discriminative deep learning models into a unified service layer with \textbf{asynchronous APIs} for cross-department usage.
+  \item Built a \textbf{Python/FastAPI ML orchestration platform} for \textbf{PyTorch-based medical-imaging workflows}, enabling natural-language-driven segmentation and classification tasks.
+  \item Implemented an event-driven \textbf{DAG workflow engine} for async task execution, processing \textbf{10K+ pathology images daily} and streaming \textbf{12M+ imaging events} through WebSockets.
 \end{itemize}
 \vspace{4pt}
 
-\resumeRole{Software Engineering Intern}{Apr 2024 -- Aug 2024}{Information Technology of CAS}{Remote}
-\begin{itemize}
-  \item Designed \textbf{Kafka and Redis-backed} event streaming services that reduced \textbf{p95 API latency from 2s to 200ms} while processing millions of IoT events.
-  \item Contributed to distributed \textbf{Spring Boot} monitoring services, delivered \textbf{35+ REST APIs}, and maintained \textbf{99.7\% uptime} in Unix-based production environments.
-\end{itemize}
-
-\section*{Open Source}
+\section*{Selected AI Systems Projects}
 \href{https://github.com/RiddleHe/nanochat}{\textbf{nanoRL}}
 \begin{itemize}
-  \item Led an open-source \textbf{RL training framework} inside nanochat for clean objective definitions, rollout experiments, RL algorithm research, reproducible ablations, and \textbf{vLLM inference serving}.
+  \item Led an open-source \textbf{RL training framework} inside nanochat for objective design, rollout experiments, reproducible ablations, and \textbf{vLLM-backed inference serving}.
 \end{itemize}
 \vspace{2pt}
 \href{https://github.com/RiddleHe/nanochat}{\textbf{nanochat}}
 \begin{itemize}
-  \item Built a hackable pretraining and chat stack supporting architecture definition and \textbf{FLOP-controlled model ablations}.
+  \item Built a hackable pretraining and chat stack for architecture definition, \textbf{FLOP-controlled ablations}, and reproducible LLM experiments.
 \end{itemize}
 \vspace{2pt}
 \href{https://github.com/RiddleHe/llm-interp}{\textbf{llm-interp}}
 \begin{itemize}
-  \item Authored reproducible interpretability scripts for model circuit research, including \textbf{attention-sink analysis} and reproductions of \textbf{LLM decode indeterminism} findings.
+  \item Authored reproducible interpretability scripts for model circuit research, including \textbf{attention-sink analysis} and \textbf{LLM decode indeterminism} reproductions.
 \end{itemize}
 
 \section*{Research}
 \href{https://arxiv.org/abs/2606.02780}{\textbf{Do Value Vectors in Deep Layers Need Context from the Residual Stream?}} \hfill EMNLP 2026, under review\\
 \begin{itemize}
-  \item Co-first author. Challenged the standard attention mechanism of computing value vectors from the residual stream, discovering that deep layers benefit from \textbf{context-free value vectors} that preserve original token information.
-  \item Proposed \textbf{Bank of Values}, a learned value-vector table for the last third of layers that eliminates the \textbf{V cache} and improves validation loss and average scores across \textbf{21 benchmarks} on \textbf{135M and 780M} models.
+  \item Co-first author; co-developed the central research hypothesis that late-layer Transformer value vectors may encode \textbf{context-free token information}, challenging the assumption that deep-layer attention values require residual-stream context.
+  \item Co-designed controlled architecture experiments and ablations across \textbf{135M/780M models} and \textbf{21 benchmarks}; proposed \textbf{Bank of Values}, a learned value-vector table that removes the \textbf{V-cache} while preserving downstream quality.
 \end{itemize}
 \vspace{2pt}
 \href{https://arxiv.org/abs/2509.21576}{\textbf{Vision Language Models Cannot Plan, but Can They Formalize?}} \hfill ECCV 2026, under review\\
 \begin{itemize}
-  \item Studied whether \textbf{VLMs} can formalize visual planning tasks into solver-executable \textbf{PDDL problem files}.
+  \item Co-designed experiments testing whether \textbf{VLMs} can translate visual planning tasks into solver-executable \textbf{PDDL problem files}, separating perception, formalization, and planning ability.
+  \item Built evaluation pipelines for visual state extraction, goal/constraint formalization, and solver-based correctness checking.
 \end{itemize}
 \vspace{2pt}
-\href{https://arxiv.org/abs/2509.20279}{\textbf{A co-evolving agentic AI system for medical imaging analysis}} \hfill Nature, under review\\
+\href{https://arxiv.org/abs/2509.20279}{\textbf{A co-evolving agentic AI system for medical imaging analysis}} \hfill Under review\\
 \begin{itemize}
-  \item Built agentic medical-imaging workflows for \textbf{tool selection, planning, knowledge updates}, and human-in-the-loop co-evolution.
+  \item Co-developed agentic medical-imaging workflows for \textbf{tool selection, planning, knowledge updates}, and human-in-the-loop co-evolution.
 \end{itemize}
 
 \section*{Skills}
-\textbf{Languages:} Python, Kotlin, Java, C++, JavaScript;
-\textbf{ML/Infra:} PyTorch, vLLM, Spark, Kafka, Iceberg, Delta Lake, FastAPI, Redis, Docker, Kubernetes, AWS, Spring Boot
+\textbf{Languages:} Python, Kotlin, Java, C++, JavaScript\\
+\textbf{ML/AI:} PyTorch, vLLM, Transformers, RL, LLM evaluation, mechanistic interpretability\\
+\textbf{Search/Data Infra:} Lucene, Kafka, Spark, Iceberg, Delta Lake, Redis, FastAPI\\
+\textbf{Systems/Cloud:} Docker, Kubernetes, AWS, Spring Boot
 
 \end{document}
