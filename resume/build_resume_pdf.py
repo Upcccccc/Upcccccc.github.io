@@ -280,7 +280,7 @@ def build():
     r.section("Research")
     r.paper(
         "Do Value Vectors in Deep Layers Need Context from the Residual Stream?",
-        "EMNLP 2026, under review",
+        "EMNLP 2026, Main Conference",
         "https://arxiv.org/abs/2606.02780",
         [
             "Co-first author; co-developed the central research hypothesis that late-layer Transformer value vectors may encode **context-free token information**, challenging the assumption that deep-layer attention values require residual-stream context.",
