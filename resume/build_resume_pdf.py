@@ -289,7 +289,7 @@ def build():
     )
     r.paper(
         "Vision Language Models Cannot Plan, but Can They Formalize?",
-        "ECCV 2026, under review",
+        "WMEAI @ ECCV 2026, Oral",
         "https://arxiv.org/abs/2509.21576",
         [
             "Co-designed experiments testing whether **VLMs** can translate visual planning tasks into solver-executable **PDDL problem files**, separating perception, formalization, and planning ability.",

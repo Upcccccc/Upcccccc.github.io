@@ -27,3 +27,5 @@ For the Data Infrastructure role, emphasize:
 ## Personal Website About You
 
 Search/AI infrastructure engineer building production-scale indexing, hybrid retrieval, and research-grade LLM/RL tooling. My strongest work sits between research and production systems: nanoRL for hackable RL experiments, production search/data infrastructure, and publications on LLM mechanisms, VLM planning formalization, and agentic medical imaging.
+
+Publication update: Vision Language Models Cannot Plan, but Can They Formalize? was accepted as an oral presentation at WMEAI @ ECCV 2026.
